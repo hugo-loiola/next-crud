@@ -1,12 +1,13 @@
 import React from 'react'
 interface BotaoProps {
   children: any,
-  cor?: 'blue'| 'green'| 'yellow'
+  className?: string
+  onClick?: () => void
 }
 
 const Botao = (props : BotaoProps) => {
   return (
-    <button className='text-center px-4 py-2 bg-green-400 rounded-md text-white'>
+    <button onClick={props.onClick} className={`${props.className} text-center px-4 py-2 bg-green-400 rounded-md text-white`}>
       {props.children}
     </button>
   )
