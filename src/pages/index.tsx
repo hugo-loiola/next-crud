@@ -1,6 +1,17 @@
 import Layout from "../components/Layout";
+import Tabela from "../components/Tabela";
+import Cliente from "../core/Cliente";
 
 export default function Home() {
+
+  const clientes = [
+    new Cliente('Ana', 34,'1'),
+    new Cliente('Hugo', 70,'2'),
+    new Cliente('Ricardo', 24,'3'),
+    new Cliente('Betinho', 18,'4'),
+    new Cliente('Ana Luísa', 40,'5'),
+  ]
+
   return (
     <div className={`
     flex justify-center items-center h-screen
@@ -8,7 +19,7 @@ export default function Home() {
     text-white
     `}>
       <Layout titulo="Cadastro Simples">
-        <span>Conteudo</span>
+        <Tabela clientes={clientes}></Tabela>
       </Layout>
     </div>
   )
