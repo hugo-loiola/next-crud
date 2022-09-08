@@ -1,4 +1,4 @@
-import firebase from "../config";
+import { dataBase } from "../config";
 import Cliente from "../../core/Cliente";
 import ClienteRepositorio from "../../core/ClienteRepositorio";
 
@@ -11,7 +11,7 @@ export default class ColecaoCliente implements ClienteRepositorio {
         idade: cliente.idade,
       }
     },
-    fromFirestore(snapshot: firebase.firestore.QueryDocumentSnapshot, options: firebase.firestore.SnapshotOptions): Cliente {
+    fromFirestore(snapshot: dataBase.firestore.QueryDocumentSnapshot, options: dataBase.firestore.SnapshotOptions): Cliente {
       const dados = snapshot?.data(options)
       return new Cliente(dados.nome, dados.idade, snapshot.id)
     }
@@ -38,9 +38,9 @@ export default class ColecaoCliente implements ClienteRepositorio {
   }
 
   private colecao(){
-    return firebase
+    return dataBase
     .firestore().collection('clientes')
-    .whithConverter(this.#conversor)
+    .whithConverter(this.conversor)
   }
 
 }
