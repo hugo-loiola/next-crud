@@ -7,9 +7,12 @@ import Cliente from "../core/Cliente";
 
 export default function Home() {
 
+  const [cliente, setCliente] = useState<Cliente>(Cliente.vazio())
   const [visivel, setVisivel] = useState<'tabela'|'formulario'>('tabela')
 
   function clienteSelecionado(cliente: Cliente) {
+    setCliente(cliente)
+    setVisivel('formulario')
   }
 
   function clienteExcluido(cliente: Cliente) {
@@ -17,8 +20,13 @@ export default function Home() {
   }
 
   function salvarCliente(cliente: Cliente) {
-    console.log(cliente)
+    console.log(Cliente.vazio())
+    setVisivel('tabela')
+  }
 
+  function novoCliente() {
+    setCliente(cliente)
+    setVisivel('formulario')
   }
 
   const clientes = [
@@ -33,14 +41,14 @@ export default function Home() {
     <div className={`
     flex justify-center items-center h-screen
     bg-gradient-to-r from-blue-400 to-purple-500
-    text-white
+    text-white overflow-hidden
     `}>
       <Layout titulo="Cadastro Simples">
       {visivel === 'tabela' ? (      <>        
         <div className="flex justify-end mb-4">
         <Botao 
           className='mb-2' 
-          onClick={() => setVisivel('formulario')}>
+          onClick={novoCliente}>
             Novo Cliente
         </Botao>
         </div>
@@ -50,7 +58,7 @@ export default function Home() {
           clienteExcluido={clienteExcluido}></Tabela>
       </>) : (  
         <Formulario 
-          cliente={clientes[0]}
+          cliente={cliente}
           clienteMudou={salvarCliente}
           cancelado={() => setVisivel('tabela')}
           />
