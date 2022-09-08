@@ -13,11 +13,10 @@ export default function Home() {
   const repo: ClienteRepositorio = new ColecaoCliente() 
 
   const [cliente, setCliente] = useState<Cliente>(Cliente.vazio())
-  const [client, setClient] = useState<Cliente[]>([])
+  const [clientes, setClientes] = useState<Cliente[]>([])
   const [visivel, setVisivel] = useState<'tabela'|'formulario'>('tabela')
 
-  useEffect(() =>{
-  },[])
+  useEffect(obterTodos,[])
 
   function clienteSelecionado(cliente: Cliente) {
     setCliente(cliente)
@@ -25,33 +24,26 @@ export default function Home() {
   }
 
   function obterTodos(){
-    repo.obterTodos().then(client => {
-      setCliente(client)
+    repo.obterTodos().then(clientes => {
+      setClientes(clientes)
       setVisivel('tabela')
     })
   }
 
-  function clienteExcluido(cliente: Cliente) {
-
+  async function clienteExcluido(cliente: Cliente) {
+    await repo.excluir(cliente)
+    obterTodos()
   }
 
   async function salvarCliente(cliente: Cliente) {
-    await repo.salvar(client)
+    await repo.salvar(cliente)
     obterTodos()
   }
 
   function novoCliente() {
-    setCliente(cliente)
+    setCliente(Cliente.vazio())
     setVisivel('formulario')
   }
-
-  const clientes = [
-    new Cliente('Ana', 34,'1'),
-    new Cliente('Hugo', 70,'2'),
-    new Cliente('Ricardo', 24,'3'),
-    new Cliente('Betinho', 18,'4'),
-    new Cliente('Ana Luísa', 40,'5'),
-  ]
 
   return (
     <div className={`
